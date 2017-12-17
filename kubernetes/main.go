@@ -6,10 +6,14 @@ import (
 	"os"
 )
 
-import "./handlers"
+import "handlers"
+import "version"
 
 func main() {
 	log.Print("Starting the service...")
+	log.Print("commit: ", version.Commit)
+	log.Print("build time: ", version.BuildTime)
+	log.Print("release: ", version.Release)
 
 	port := os.Getenv("PORT")
 	if port == "" {
