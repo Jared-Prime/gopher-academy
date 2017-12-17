@@ -1,10 +1,10 @@
 package handlers
 
 import (
-"fmt"
-"net/http"
+	"fmt"
+	"net/http"
 )
 
 func home(w http.ResponseWriter, _ *http.Request) {
-  fmt.Fprint(w, "Hello! Your request was processed.\n")
+	fmt.Fprint(w, "Hello! Your request was processed.\n")
 }
