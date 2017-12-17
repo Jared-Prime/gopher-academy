@@ -23,6 +23,9 @@ build: clean
 container: build
 	docker build -t jprime/${APP}:${RELEASE} .
 
+push: container
+	docker push jprime/${APP}:${RELEASE}
+
 run: container
 	docker stop jprime/${APP}:${RELEASE} || true && docker rm jprime/${APP}:${RELEASE} || true
 	docker run --name ${APP} -p ${PORT}:${PORT} --rm \
