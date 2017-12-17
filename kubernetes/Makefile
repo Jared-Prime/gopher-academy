@@ -7,12 +7,14 @@ BUILD_TIME?=$(shell date -u '+%Y-%m-%d_%H:%M:%S')
 GOOS?=linux
 GOARCH=amd64
 
+PROJECT?=github.com/jared-prime/gopher-academy/kubernetes/handlers
+
 clean:
 	rm -f ${APP}
-	GOPATH=$(shell pwd) go fmt handlers
+	go fmt ${PROJECT}
 
 build: clean
-	GOPATH=${GOPATH}:$(shell pwd) GOOS=${GOOS} GOARCH=${GOARCH} \
+	GOOS=${GOOS} GOARCH=${GOARCH} \
 	  go build -o ${APP} -ldflags \
 	   "-s -w -X handlers.Release=${RELEASE} \
 		  -X handlers.Commit=${COMMIT} \
@@ -28,4 +30,4 @@ run: container
 		jprime/${APP}:${RELEASE}
 
 test:
-	GOPATH=${GOPATH}:$(shell pwd) go test -v -race handlers
+	go test -v -race ${PROJECT}

@@ -7,9 +7,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"github.com/jared-prime/gopher-academy/kubernetes/handlers"
 )
-
-import "handlers"
 
 func main() {
 	log.Print("Starting the service...")
