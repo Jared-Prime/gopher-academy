@@ -18,4 +18,4 @@ run: build
 	PORT=${PORT} ./${APP}
 
 test:
-	GOPATH=$(shell pwd) go test -v -race handlers
+	GOPATH=${GOPATH}:$(shell pwd) go test -v -race handlers
