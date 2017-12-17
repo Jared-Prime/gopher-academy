@@ -7,13 +7,12 @@ import (
 )
 
 import "handlers"
-import "version"
 
 func main() {
 	log.Print("Starting the service...")
-	log.Print("commit: ", version.Commit)
-	log.Print("build time: ", version.BuildTime)
-	log.Print("release: ", version.Release)
+	log.Print("commit: ", handlers.Commit)
+	log.Print("build time: ", handlers.BuildTime)
+	log.Print("release: ", handlers.Release)
 
 	port := os.Getenv("PORT")
 	if port == "" {

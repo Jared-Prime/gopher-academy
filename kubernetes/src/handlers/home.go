@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-import "version"
-
 func home(w http.ResponseWriter, _ *http.Request) {
 	info := struct {
 		BuildTime string `json:"buildTime"`
@@ -15,7 +13,7 @@ func home(w http.ResponseWriter, _ *http.Request) {
 		Release   string `json:"release"`
 		Message   string `json:"message"`
 	}{
-		version.BuildTime, version.Commit, version.Release, "Hello! Your request was processed.",
+		BuildTime, Commit, Release, "Hello! Your request was processed.",
 	}
 
 	body, err := json.Marshal(info)

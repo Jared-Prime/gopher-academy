@@ -1,6 +1,5 @@
-package version
+package handlers
 
-// we'll supply these at build time via the Makefile
 var (
 	BuildTime = "unset"
 	Commit    = "unset"
