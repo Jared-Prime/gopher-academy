@@ -26,6 +26,15 @@ container: build
 push: container
 	docker push jprime/${APP}:${RELEASE}
 
+minikube: #push
+	for t in $(shell find . -type f -name "*.yaml"); do \
+		cat $$t | \
+			sed -E "s/\{\{ \.Release \}\}/\"$(RELEASE)\"/g" | \
+			sed -E "s/\{\{ \.ServiceName \}\}/\"$(APP)\"/g"; \
+		echo ---; \
+	done > tmp.yaml
+	kubectl apply -f tmp.yaml
+
 run: container
 	docker stop jprime/${APP}:${RELEASE} || true && docker rm jprime/${APP}:${RELEASE} || true
 	docker run --name ${APP} -p ${PORT}:${PORT} --rm \
