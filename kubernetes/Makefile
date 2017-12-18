@@ -26,7 +26,7 @@ container: build
 push: container
 	docker push jprime/${APP}:${RELEASE}
 
-minikube: #push
+minikube: push
 	for t in $(shell find . -type f -name "*.yaml"); do \
 		cat $$t | \
 			sed -E "s/\{\{ \.Release \}\}/\"$(RELEASE)\"/g" | \
