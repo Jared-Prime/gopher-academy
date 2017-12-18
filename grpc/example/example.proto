@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-service GoReleaseService {
+service Service {
     rpc GetReleaseInfo(GetReleaseInfoRequest) returns (ReleaseInfo) {}
     rpc ListReleases(ListReleasesRequest) returns (ListReleasesResponse) {}
 }
