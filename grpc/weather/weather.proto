@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+service WeatherForecast {
+  rpc GetForecastDay(GetForecastDayRequest) returns (ForecastDayInfo) {}
+  rpc GetForecastWeek(GetForecastWeekRequest) returns (ForecastWeekInfo) {}
+}
+
+enum DayOfWeek {
+  Sun = 0;
+  Mon = 1;
+  Tue = 2;
+  Wed = 3;
+  Thu = 4;
+  Fri = 5;
+  Sat = 6;
+}
+
+enum TemperatureUnit {
+  Celsius = 0;
+  Fahrenheit = 1;
+}
+
+message GetForecastDayRequest {
+  DayOfWeek day = 1;
+}
+
+message ForecastDayInfo {
+  DayOfWeek day = 1;
+  int32 Temperature = 2;
+  TemperatureUnit unit = 3;
+  int32 ChanceOfPrecipitation = 4;
+  string ForecastDescription = 5;
+  string DetailedForecastDescription = 6;
+}
+
+message GetForecastWeekRequest {}
+
+message ForecastWeekInfo {
+  repeated ForecastDayInfo forecasts = 1;
+}
