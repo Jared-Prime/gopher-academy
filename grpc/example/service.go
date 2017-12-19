@@ -8,7 +8,7 @@ import (
 
 type releaseInfo struct {
 	ReleaseDate     string `json:"release_date"`
-	ReleaseNotesURL string `json:"release_notes_url`
+	ReleaseNotesURL string `json:"release_notes_url"`
 }
 
 type ExampleService interface {
