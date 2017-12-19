@@ -42,8 +42,17 @@ func init() {
 }
 
 func main() {
-  weatherUnderground, err := weather.NewweatherChannelApiClient(wundergroundApiKeyId)
+  weatherUnderground, err := weather.NewBackendApi(wundergroundApiKeyId)
   if err != nil {
     log.Fatal(err)
   }
+
+  log.Println("getting info from weather underground...")
+  response, err := weatherUnderground.GetForecastWeek(&weather.GetForecastWeekRequest{})
+  if err != nil {
+  	log.Fatal(err)
+  }
+  log.Println("got info!")
+
+  log.Print(*response)
 }
