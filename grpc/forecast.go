@@ -2,21 +2,19 @@ package main
 
 import (
 	"encoding/json"
-  "github.com/go-redis/cache"
-  "github.com/go-redis/redis"
 	"fmt"
+	"github.com/go-redis/cache"
+	"github.com/go-redis/redis"
 	"log"
 	"os"
 
 	weather "github.com/jared-prime/gopher-academy/grpc/weather"
 )
 
-
-
 var (
-	wundergroundApiKeyId  string
-	redisHost             string
-	redisCache            *cache.Codec
+	wundergroundApiKeyId string
+	redisHost            string
+	redisCache           *cache.Codec
 )
 
 func init() {
@@ -42,17 +40,17 @@ func init() {
 }
 
 func main() {
-  weatherUnderground, err := weather.NewBackendApi(wundergroundApiKeyId)
-  if err != nil {
-    log.Fatal(err)
-  }
+	weatherUnderground, err := weather.NewWeatherUndergroundClient(wundergroundApiKeyId)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-  log.Println("getting info from weather underground...")
-  response, err := weatherUnderground.GetForecastWeek(&weather.GetForecastWeekRequest{})
-  if err != nil {
-  	log.Fatal(err)
-  }
-  log.Println("got info!")
+	service := weather.NewServiceBackend(weatherUnderground)
 
-  log.Print(*response)
+	response, err := service.GetForecastWeek(&weather.GetForecastWeekRequest{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Print(*response)
 }
