@@ -30,7 +30,6 @@ func (backend *WeatherUndergroundApiClient) ReportWeeklyForecast() (*ForecastWee
 		return weekly_forecast, err
 	}
 
-
 	defer response.Body.Close()
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -39,23 +38,21 @@ func (backend *WeatherUndergroundApiClient) ReportWeeklyForecast() (*ForecastWee
 
 	log.Println("raw response is:", string(body))
 
-	var data WeatherUndergroundApiForecast
+	var data WeatherUndergroundApiForecastResponse
 	err = json.Unmarshal([]byte(body), &data)
 	if err != nil {
 		return weekly_forecast, err
 	}
 
 	log.Println("formatting response...")
-	for _, forecast := range data.SimpleForecasts {
-		for _, day := range forecast.ForecastDays {
-			daily_forecast := &ForecastDayInfo{
-				Day:                 WundergroundDays_Number[day.WeatherUndergroundForecastDate.Weekday],
-				Temperature:         day.WeatherUndergroundForecastHigh.Celsius,
-				ForecastDescription: day.Conditions,
-			}
-
-			weekly_forecast.Forecasts = append(weekly_forecast.Forecasts, daily_forecast)
+	for _, forecast := range data.Forecasts() {
+		daily_forecast := &ForecastDayInfo{
+			Day:                 DayOfWeek(forecast.DayOfWeek()),
+			Temperature:         forecast.HighTemperature(),
+			ForecastDescription: forecast.Conditions,
 		}
+
+		weekly_forecast.Forecasts = append(weekly_forecast.Forecasts, daily_forecast)
 	}
 
 	return weekly_forecast, nil
