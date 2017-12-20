@@ -1,4 +1,4 @@
-package weather
+package weather_underground_api
 
 type WeatherUndergroundApiForecastResponse struct {
 	Forecast WeatherUndergroundForecast `json:"forecast"`
@@ -26,16 +26,4 @@ type WeatherUndergroundForecastDay struct {
 	} `json:"low"`
 
 	Conditions string `json:"conditions"`
-}
-
-func (resp WeatherUndergroundApiForecastResponse) Forecasts() []WeatherUndergroundForecastDay {
-	return resp.Forecast.Simple.Days
-}
-
-func (forecast WeatherUndergroundForecastDay) DayOfWeek() int32 {
-	return DayOfWeek_value[forecast.Date.Weekday[0:3]]
-}
-
-func (forecast WeatherUndergroundForecastDay) HighTemperature() string {
-	return forecast.High.Fahrenheit
 }
