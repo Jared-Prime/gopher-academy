@@ -1,4 +1,4 @@
-package weather_underground_api
+package wunderground
 
 import (
 	"encoding/json"
@@ -7,20 +7,20 @@ import (
 	"net/http"
 )
 
-func NewClient(wundergroundApiKeyId string) (*WeatherUndergroundApiClient, error) {
-	return &WeatherUndergroundApiClient{ApiKeyId: wundergroundApiKeyId}, nil
+func NewApiClient(wundergroundApiKeyId string) (*WundergroundApiClient, error) {
+	return &WundergroundApiClient{ApiKeyId: wundergroundApiKeyId}, nil
 }
 
-type WeatherUndergroundApiClient struct {
+type WundergroundApiClient struct {
 	ApiKeyId string
 }
 
-func (api WeatherUndergroundApiClient) Endpoint() string {
+func (api WundergroundApiClient) Endpoint() string {
 	return fmt.Sprintf("http://api.wunderground.com/api/%s/forecast10day/q/IL/Chicago.json", api.ApiKeyId)
 }
 
-func (api *WeatherUndergroundApiClient) ReportWeeklyForecast() (WeatherUndergroundApiForecastResponse, error) {
-	var data WeatherUndergroundApiForecastResponse
+func (api *WundergroundApiClient) WundergroundForecast() (WundergroundForecast, error) {
+	var data WundergroundForecast
 
 	response, err := http.Get(api.Endpoint())
 	if err != nil {

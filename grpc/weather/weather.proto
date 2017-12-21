@@ -21,16 +21,14 @@ enum TemperatureUnit {
 }
 
 message GetForecastDayRequest {
-  DayOfWeek day = 1;
+  DayOfWeek day_of_week = 1;
 }
 
 message ForecastDayInfo {
-  DayOfWeek day = 1;
-  string Temperature = 2;
+  DayOfWeek day_of_week = 1;
+  string temperature = 2;
   TemperatureUnit unit = 3;
-  int32 ChanceOfPrecipitation = 4;
-  string ForecastDescription = 5;
-  string DetailedForecastDescription = 6;
+  string conditions = 4;
 }
 
 message GetForecastWeekRequest {}
