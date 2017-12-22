@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -22,6 +23,7 @@ func (api WundergroundApiClient) Endpoint() string {
 func (api *WundergroundApiClient) WundergroundForecast() (WundergroundForecast, error) {
 	var data WundergroundForecast
 
+	log.Print("calling wunderground API...")
 	response, err := http.Get(api.Endpoint())
 	if err != nil {
 		return data, err
@@ -35,5 +37,6 @@ func (api *WundergroundApiClient) WundergroundForecast() (WundergroundForecast, 
 
 	err = json.Unmarshal([]byte(body), &data)
 
+	log.Print("successfully retrieved wunderground API data!")
 	return data, err
 }
