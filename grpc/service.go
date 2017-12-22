@@ -1,14 +1,17 @@
 package main
 
 import (
-	"flag"
 	"log"
+	"net"
 	"os"
 
-	client "github.com/jared-prime/gopher-academy/grpc/weather"
+	"google.golang.org/grpc"
+
+	pb "github.com/jared-prime/gopher-academy/grpc/weather"
 	service "github.com/jared-prime/gopher-academy/grpc/wunderground"
 )
 
+var port string
 var api_key string
 var day int
 
@@ -17,24 +20,28 @@ func init() {
 	if api_key == "" {
 		log.Fatal("$WEATHER_UNDERGROUND_API_KEY required!")
 	}
+
+	port = os.Getenv("WEATHER_SERVICE_PORT")
+	if port == "" {
+		log.Print("no $WEATHER_SERVICE_PORT, using default 8000")
+		port = "8000"
+	}
 }
 
 func main() {
-	flag.IntVar(&day, "day", 0, "day of week (Sunday = 0, Saturday = 6, etc)")
-	flag.Parse()
-
 	agent, err := service.NewApiClient(api_key)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Print("getting forecast for ", day)
-
-	res, err := agent.GetForecastDay(&client.GetForecastDayRequest{client.DayOfWeek(day)})
-
+	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("failed to connect to specified port: ", port)
 	}
 
-	log.Print(res)
+	server := grpc.NewServer()
+
+	pb.RegisterWeatherForecastServer(server, agent)
+
+	server.Serve(listener)
 }

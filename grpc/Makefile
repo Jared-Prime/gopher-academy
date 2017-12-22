@@ -6,7 +6,7 @@ VERSION?=0.0.1
 GOOS?=linux
 GOARCH?=amd64
 
-WEATHER_UNDERGROUND_API_KEY?="unset"
+WEATHER_UNDERGROUND_API_KEY?=fcfdaad82a7274ab
 
 forecast:
 	docker run --name weathercache --rm -d redis || true

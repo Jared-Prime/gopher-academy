@@ -1,8 +1,12 @@
 package wunderground
 
-import pb "github.com/jared-prime/gopher-academy/grpc/weather"
+import (
+  "context"
+  
+  pb "github.com/jared-prime/gopher-academy/grpc/weather"
+)
 
-func (backend *WundergroundApiClient) GetForecastWeek(_ *pb.GetForecastWeekRequest) (*pb.ForecastWeekInfo, error) {
+func (backend *WundergroundApiClient) GetForecastWeek(_ context.Context, _ *pb.GetForecastWeekRequest) (*pb.ForecastWeekInfo, error) {
   weekly, err := backend.CachedForecast()
   if err != nil {
     return &pb.ForecastWeekInfo{}, err
@@ -13,7 +17,7 @@ func (backend *WundergroundApiClient) GetForecastWeek(_ *pb.GetForecastWeekReque
   return &forecast, err
 }
 
-func (backend *WundergroundApiClient) GetForecastDay(request *pb.GetForecastDayRequest) (*pb.ForecastDayInfo, error) {
+func (backend *WundergroundApiClient) GetForecastDay(_ context.Context, request *pb.GetForecastDayRequest) (*pb.ForecastDayInfo, error) {
   weekly, err := backend.CachedForecast()
   if err != nil {
     return &pb.ForecastDayInfo{}, err
