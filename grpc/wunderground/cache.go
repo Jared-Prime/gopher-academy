@@ -43,5 +43,9 @@ func (api *WundergroundApiClient) CachedForecast() (WundergroundForecast, error)
     Expiration: time.Hour,
   })
 
+  if err != nil {
+    log.Print("problem accessing forecast: ", err)
+  }
+
   return *forecast, err
 }
