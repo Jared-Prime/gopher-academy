@@ -1,6 +1,6 @@
 package wunderground
 
-import pb "../weather"
+import pb "github.com/jared-prime/gopher-academy/grpc/weather"
 
 type WundergroundForecast struct {
 	Forecast struct {

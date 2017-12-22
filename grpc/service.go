@@ -1,18 +1,33 @@
 package main
 
 import (
-  "log"
-  "os"
-  
-  client "./weather"
-  service "./wunderground"
+	"log"
+	"os"
+
+	client "github.com/jared-prime/gopher-academy/grpc/weather"
+	service "github.com/jared-prime/gopher-academy/grpc/wunderground"
 )
 
-func main(){
-  agent, err := service.NewApiClient(os.Getenv("WEATHER_UNDERGROUND_API_KEY"))
-  if err != nil {
-    log.Fatal(err)
-  }
+var api_key string
 
-  agent.GetForecastDay(&client.GetForecastDayRequest{ client.DayOfWeek_Sun })
+func init() {
+	api_key = os.Getenv("WEATHER_UNDERGROUND_API_KEY")
+	if api_key == "" {
+		log.Fatal("$WEATHER_UNDERGROUND_API_KEY required!")
+	}
+}
+
+func main() {
+	agent, err := service.NewApiClient(api_key)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	res, err := agent.GetForecastDay(&client.GetForecastDayRequest{client.DayOfWeek_Sun})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Print(res)
 }

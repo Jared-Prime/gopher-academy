@@ -1,6 +1,6 @@
 package wunderground
 
-import pb "../weather"
+import pb "github.com/jared-prime/gopher-academy/grpc/weather"
 
 func (backend *WundergroundApiClient) GetForecastWeek(_ *pb.GetForecastWeekRequest) (*pb.ForecastWeekInfo, error) {
   weekly, err := backend.WundergroundForecast()

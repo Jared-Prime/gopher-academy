@@ -1,17 +1,17 @@
-APP?=forecast
+APP?=service
 
 run: build
-	./forecast
+	./${APP}
 
 build: clean
-	go build forecast.go
+	go build ${APP}.go
 
 clean:
 	go fmt
 	go fmt ./weather
-	go vet ./weather/weather_underground_api
+	go vet ./wunderground
 	rm -f ${APP}
 
 test:
 	go test -v -race ./weather
-	go test -v -race ./weather/weather_underground_api
+	go test -v -race ./wunderground
