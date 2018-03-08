@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+service Healthcheck {
+  rpc Ok(HealthcheckRequest) returns (HealthcheckResponse) {}
+}
+
+message HealthcheckRequest {}
+
+message HealthcheckResponse {
+  enum Status {
+    Standby = 0;
+    Starting = 1;
+    Ready = 2;
+  }
+  Status status = 1;
+}
