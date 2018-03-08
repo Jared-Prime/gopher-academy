@@ -1,4 +1,4 @@
-[read the blog](blog.haiqus.com)
+[read the blog](http://blog.haiqus.com)
 
 Disclosure: this is how *I* structure my projects utilizing [gRPC, the simple service definition framework](https://grpc.io/). It works well for me in building backend service projects, but as needs change so do implementation details.
 
